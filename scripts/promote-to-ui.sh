@@ -103,13 +103,26 @@ step "提交到 main：$COMMIT_MSG"
 git commit -m "$COMMIT_MSG"
 echo ""
 
-# 6. 切回原分支
+# 6. 把 main 上剩余的场景文件 stash 掉，确保切回 scene 分支时工作区干净
+STASH_RESULT=$(git stash -u 2>&1)
+HAS_SCENE_STASH=false
+if echo "$STASH_RESULT" | grep -q "Saved working directory"; then
+  HAS_SCENE_STASH=true
+  step "暂存剩余场景文件..."
+fi
+
+# 7. 切回原分支
 step "切回 $CURRENT_BRANCH ..."
 git checkout "$CURRENT_BRANCH"
 
-# 7. rebase main，拉取刚才的提交
+# 8. rebase main，拉取刚才的提交
 step "rebase main..."
 if git rebase main; then
+  # 9. 把场景文件 pop 回来
+  if [ "$HAS_SCENE_STASH" = true ]; then
+    step "还原场景专属文件..."
+    git stash pop
+  fi
   echo ""
   info "✓ 完成！${COMPONENT} 已提升到 main"
   echo ""
@@ -120,5 +133,8 @@ else
   echo ""
   error "rebase 冲突，请手动解决后执行："
   error "  git rebase --continue"
+  if [ "$HAS_SCENE_STASH" = true ]; then
+    warn "解决完冲突后还需手动执行 git stash pop 还原场景文件"
+  fi
   exit 1
 fi
