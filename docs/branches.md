@@ -18,6 +18,12 @@
 | 分支 | 场景名称 | 说明 |
 |------|----------|------|
 | `scene/basic-list` | 基础列表 | 验证列表在空/单条/常规/大数据量/边界值下的 UI 表现 |
+| `scene/basic-form` | 基础表单 | 验证表单字段、校验、提交等交互 |
+| `scene/card-grid` | 卡片网格 | 验证卡片布局在不同列数和数据量下的表现 |
+| `scene/data-table` | 数据表格 | 验证带排序、筛选的表格场景 |
+| `scene/virtual-list` | 虚拟滚动列表 | 使用 react-virtuoso 验证万级数据无卡顿渲染 |
+| `scene/timeline` | 时间轴 | 按时间顺序展示事件节点，含彩色状态圆点 |
+| `scene/kanban-board` | 看板 | 使用 @dnd-kit 实现多列看板跨列拖拽排序 |
 
 ## 组合分支 `combo/*`
 
