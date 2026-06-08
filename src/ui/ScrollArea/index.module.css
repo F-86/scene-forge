@@ -1,0 +1,25 @@
+/* ── 垂直滚动容器 ── */
+.area {
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* 内容比容器高时出现滚动条，需父级提供明确高度 */
+  min-height: 0;
+}
+
+/* ── 细化滚动条样式（Webkit） ── */
+.area::-webkit-scrollbar {
+  width: 4px;
+}
+
+.area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.area::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 2px;
+}
+
+.area::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
