@@ -1,0 +1,6 @@
+.badge {
+  display: inline-block;
+  border-radius: 50%;
+  flex-shrink: 0;
+  /* width / height / background 通过 style 属性注入 */
+}
