@@ -145,6 +145,25 @@ git add src/scenes/<SceneName>/ src/App.tsx src/scenes/index.ts
 git commit -m "feat(<kebab-name>): 开发<场景中文名>场景"
 ```
 
+## 第十步：更新分支记录
+
+在 `docs/branches.md` 的「场景分支」表格末尾追加一行：
+
+```markdown
+| `scene/<kebab-name>` | <场景中文名> | <一句话说明场景用途，含关键技术点> |
+```
+
+说明字段的写法参考：
+- 体现「验证什么」或「实现什么交互」
+- 如有引入第三方库，注明库名（如「使用 react-virtuoso」、「使用 @dnd-kit」）
+
+追加完毕后在 scene 分支上提交：
+
+```bash
+git add docs/branches.md
+git commit -m "docs(branches): 新增 scene/<kebab-name> 分支记录"
+```
+
 ## 禁止事项
 
 - 禁止把 `src/ui/` 的改动直接提交到 scene 分支（必须通过 `promote-to-ui.sh`）
