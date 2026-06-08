@@ -1,0 +1,21 @@
+/* ── 水平排列，左右两端对齐 ── */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* ── 左侧主内容：自适应，文字超长时截断 ── */
+.main {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── 右侧辅助内容：不收缩 ── */
+.trailing {
+  flex-shrink: 0;
+}
