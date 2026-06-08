@@ -30,20 +30,36 @@
 
 ### 新建场景的完整流程
 
+开发过程中如果发现可以提取到 `src/ui/` 的通用组件，需要分两次提交，确保 `src/ui/` 的变更始终归属 main。
+
 ```bash
 # 1. 从 main 切出新分支
 git checkout main
 git checkout -b scene/basic-list
 
-# 2. 开发：创建 src/scenes/BasicList/，注册到 scenes/index.ts 和 App.tsx
+# 2. 开发场景，期间如发现可复用的 UI 原语，先不提交，开发完再走下面的流程
 
-# 3. 提交
+# ── 第一次提交：通用组件（如有） ────────────────────────────────────────────
+
+# 3. 使用脚本自动完成：切 main 提交组件 → 切回 → rebase
+bash scripts/promote-to-ui.sh <ComponentName>
+# 脚本等价于：
+#   git checkout main
+#   git add src/ui/<ComponentName>/ src/ui/index.ts
+#   git commit -m "feat(ui): 新增 XxxComponent 共享组件"
+#   git checkout scene/basic-list
+#   git rebase main
+
+# ── 第二次提交：场景独有代码 ─────────────────────────────────────────────────
+
+# 4. 提交场景专属文件（不包含任何 src/ui/ 内容）
 git add src/scenes/BasicList/ src/scenes/index.ts src/App.tsx docs/requirements/scenes/basic-list.md
 git commit -m "feat(basic-list): 新增基础列表场景"
-
-# 4. 切回 main，main 保持干净
-git checkout main
 ```
+
+**如果场景中没有可提取的通用组件**，跳过第一次提交，直接在场景分支上一次提交即可。
+
+**`src/ui/` 的任何改动都只能提交到 main，禁止在 scene/* 分支上直接提交。**
 
 ### 新建实验的完整流程
 
@@ -96,7 +112,30 @@ git merge scene/kanban
 
 ### 脚本工具
 
-项目根目录 `scripts/` 下提供两个辅助脚本，在项目根目录下执行。
+项目根目录 `scripts/` 下提供三个辅助脚本，在项目根目录下执行。
+
+#### `promote-to-ui.sh` — 将通用组件从场景分支提升到 main
+
+在 `scene/*` 分支开发时，发现有可复用的 UI 原语，使用此脚本一键完成：切 main 提交组件 → 切回场景分支 → rebase。
+
+```bash
+bash scripts/promote-to-ui.sh <ComponentName>
+
+# 示例：将 SortIndicator 提升到 main
+bash scripts/promote-to-ui.sh SortIndicator
+```
+
+也可使用 slash command（需先建好 `.claude/commands/`）：
+
+```
+/promote-to-ui SortIndicator
+```
+
+注意事项：
+- 只能在 `scene/*` 分支上执行
+- 执行前确保 `src/ui/<ComponentName>/` 目录已存在，且 `src/ui/index.ts` 已添加导出
+- 脚本完成后，场景专属代码会还原到工作区，手动执行第二次提交即可
+- rebase 冲突时需手动解决后执行 `git rebase --continue`
 
 #### `sync-main.sh` — 将 main 同步到所有本地分支
 
