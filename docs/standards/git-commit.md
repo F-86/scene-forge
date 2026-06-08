@@ -94,6 +94,41 @@ git merge scene/kanban
 
 **冲突规律**：每次 merge 新场景时，`App.tsx` 和 `scenes/index.ts` 必然冲突，处理方式永远相同——把两侧的 import 和注册条目全部保留。其余文件（`src/scenes/Xxx/`）不会冲突，因为各场景目录是独立的。
 
+### 脚本工具
+
+项目根目录 `scripts/` 下提供两个辅助脚本，在项目根目录下执行。
+
+#### `sync-main.sh` — 将 main 同步到所有本地分支
+
+当 main 上有新的通用组件或规范更新时，执行此脚本将变更 rebase 到所有 `scene/*`、`combo/*`、`exp/*` 分支。**建议每次修改 main 后立即执行。**
+
+```bash
+bash scripts/sync-main.sh
+```
+
+注意事项：
+- 执行前工作区必须干净（无未提交改动），否则脚本会中止
+- 脚本会尝试拉取远程 main 的最新代码，无远程时自动跳过
+- rebase 冲突时该分支会被跳过并记录，脚本继续处理其他分支，最后汇报失败列表
+- 失败的分支需手动 `git checkout <分支> && git rebase main` 解决冲突
+
+#### `create-combo.sh` — 从多个 scene 分支创建 combo 分支
+
+需要同时展示多个场景时使用。从 main 切出新分支后依次 merge 指定的 scene 分支。
+
+```bash
+bash scripts/create-combo.sh <combo分支名> <scene分支1> <scene分支2> [...]
+
+# 示例
+bash scripts/create-combo.sh combo/data-display scene/basic-list scene/data-table
+```
+
+注意事项：
+- combo 分支名必须以 `combo/` 开头，且不能已存在
+- 执行前工作区必须干净，且所有目标 scene 分支须已存在于本地
+- merge 时遇到冲突脚本会暂停，在另一个终端解决冲突并 `git add + git commit` 后，回到脚本按回车继续
+- 脚本完成后在 `docs/branches.md` 补充该 combo 分支的记录
+
 ---
 
 ## 二、提交信息格式
