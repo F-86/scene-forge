@@ -1,0 +1,8 @@
+.tag {
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  font-weight: 500;
+  /* color / background 通过 style 属性注入 */
+}

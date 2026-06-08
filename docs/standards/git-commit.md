@@ -8,19 +8,21 @@
 
 ## 一、分支策略
 
-本项目采用**三类分支**，对应三种不同性质的工作：
+本项目采用**四类分支**，对应四种不同性质的工作：
 
 | 分支 | 命名 | 用途 |
 |------|------|------|
 | `main` | 固定 | 框架骨架、通用组件、规范文档；不包含任何具体场景 |
 | `scene/<name>` | 如 `scene/basic-list` | 单个 UI 场景的完整实现；从 `main` 切出，**不合并回 main** |
+| `combo/<purpose>` | 如 `combo/data-display` | 组合多个场景同时呈现；从 `main` 切出，merge 所需的 scene 分支 |
 | `exp/<name>` | 如 `exp/tab-bar` | 实验性功能探索；从 `main` 切出，根据结论决定是否合并 |
 
 ### main 分支上允许存在的内容
 
 - `src/components/` — 通用布局组件（Layout、Sidebar、MockSwitcher 等）
+- `src/ui/` — 共享 UI 原语（Avatar、Tag、EmptyState 等）
 - `src/hooks/` — 通用 Hook（`useMockVariant` 等）
-- `src/mock/` — 工厂函数基础结构（**不含**具体场景的工厂函数）
+- `src/mock/` — Mock 目录结构（**不含**具体场景的工厂函数）
 - `src/scenes/Home/` — 占位首页
 - `src/scenes/index.ts` — 仅注册首页，不含任何场景条目
 - `src/App.tsx` — 仅包含首页路由，不含任何场景路由
@@ -59,6 +61,39 @@ git commit -m "exp(tab-bar): 探索顶部标签栏布局方案"
 # 4b. 探索放弃，保留分支存档即可，不合并
 ```
 
+### 组合多个场景的完整流程
+
+`combo` 分支用于把多个 `scene` 分支合并在一起，同时呈现多个场景。分支名用**目的/用途**命名，不枚举场景名（场景越并越多，名字枚举会失控）。
+
+```bash
+# 1. 从 main 切出
+git checkout main
+git checkout -b combo/data-display
+
+# 2. 依次 merge 所需的 scene 分支
+git merge scene/basic-list
+git merge scene/data-table   # App.tsx 和 scenes/index.ts 此处必然冲突
+
+# 3. 解决冲突：两侧内容全部保留，不要丢弃任何一边
+# App.tsx 冲突示例 ↓
+# <<<<<<< HEAD
+# import BasicList from '@/scenes/BasicList'
+# =======
+# import DataTable from '@/scenes/DataTable'
+# >>>>>>> scene/data-table
+# → 改为同时保留两行：
+# import BasicList from '@/scenes/BasicList'
+# import DataTable from '@/scenes/DataTable'
+
+git add src/App.tsx src/scenes/index.ts
+git commit -m "combo(data-display): 合并基础列表 + 数据表格场景"
+
+# 4. 继续 merge 更多场景，重复步骤 2-3
+git merge scene/kanban
+```
+
+**冲突规律**：每次 merge 新场景时，`App.tsx` 和 `scenes/index.ts` 必然冲突，处理方式永远相同——把两侧的 import 和注册条目全部保留。其余文件（`src/scenes/Xxx/`）不会冲突，因为各场景目录是独立的。
+
 ---
 
 ## 二、提交信息格式
@@ -78,12 +113,14 @@ git commit -m "exp(tab-bar): 探索顶部标签栏布局方案"
 | `docs` | `main` | 文档变更 |
 | `chore` | `main` | 工具、依赖、配置变更 |
 | `exp` | `exp/*` | 实验性探索（过程提交可以随意，合并前整理） |
+| `combo` | `combo/*` | 合并多个场景或解决合并冲突后的整理提交 |
 
 ## 四、提交示例
 
 ```
 # main 分支
 feat(sidebar): 新增场景分组折叠功能
+feat(ui): 新增 Avatar / Tag / EmptyState 共享组件
 fix(mock-switcher): 修复刷新后变体未保留的问题
 refactor(mock): 提取公共工厂函数至 mock/factory.ts
 docs(standards): 更新 Git 分支规范
@@ -94,6 +131,10 @@ feat(basic-list): 新增基础列表场景
 mock(basic-list): 补充超长文本边界数据
 fix(basic-list): 修复空描述时布局出现多余间距的问题
 docs(basic-list): 补充场景需求文档
+
+# combo/* 分支
+combo(data-display): 合并基础列表 + 数据表格场景
+combo(data-display): 合并看板场景，解决 App.tsx 冲突
 
 # exp/* 分支
 exp(tab-bar): 初始化顶部标签栏结构
@@ -106,4 +147,6 @@ exp(tab-bar): 验证多标签滚动溢出方案
 - 范围对应场景目录名（`src/scenes/` 下）或模块名
 - 单次提交只做一件事，避免将多个场景变更合并提交
 - `scene/*` 分支**永不合并回 main**，main 始终只有框架代码
+- `combo/*` 分支合并冲突时，`App.tsx` 和 `scenes/index.ts` 两侧内容**全部保留**，不丢弃任何一边
 - `exp/*` 分支的过程提交可以凌乱，合并前需用 `git rebase -i` 整理
+- `src/ui/` 中的共享组件只放与业务无关的 UI 原语，不放场景专属逻辑
