@@ -1,0 +1,158 @@
+/* 基础表单场景样式 */
+
+/* ── 页面布局 ─────────────────────────────────────────────────────────────── */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 560px;
+}
+
+/* ── 页头 ────────────────────────────────────────────────────────────────── */
+
+.header {
+  flex-shrink: 0;
+}
+
+.headerTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text-primary, #111827);
+}
+
+/* ── 表单卡片 ────────────────────────────────────────────────────────────── */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #fff;
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 10px;
+  padding: 24px;
+}
+
+/* ── 控件基础样式 ────────────────────────────────────────────────────────── */
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border, #e5e7eb);
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--color-text-primary, #111827);
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: var(--color-primary, #6366f1);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+/* ── 文本域 ──────────────────────────────────────────────────────────────── */
+
+.textareaWrapper {
+  position: relative;
+}
+
+.textarea {
+  min-height: 80px;
+  resize: vertical;
+  line-height: 1.6;
+  padding-bottom: 24px;
+}
+
+.charCount {
+  position: absolute;
+  right: 10px;
+  bottom: 8px;
+  font-size: 11px;
+  color: var(--color-text-tertiary, #9ca3af);
+  pointer-events: none;
+}
+
+.charCountOver {
+  color: #ef4444;
+}
+
+/* ── 单选组 ──────────────────────────────────────────────────────────────── */
+
+.radioGroup {
+  display: flex;
+  gap: 20px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--color-text-primary, #111827);
+  cursor: pointer;
+}
+
+.radio {
+  accent-color: var(--color-primary, #6366f1);
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+/* ── 开关行 ──────────────────────────────────────────────────────────────── */
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toggleLabel {
+  font-size: 14px;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+/* ── 操作按钮 ────────────────────────────────────────────────────────────── */
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.btnReset,
+.btnSubmit {
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s;
+}
+
+.btnReset:hover,
+.btnSubmit:hover {
+  opacity: 0.85;
+}
+
+.btnReset {
+  background: var(--color-bg-subtle, #f3f4f6);
+  color: var(--color-text-secondary, #6b7280);
+  border: 1px solid var(--color-border, #e5e7eb);
+}
+
+.btnSubmit {
+  background: var(--color-primary, #6366f1);
+  color: #fff;
+}
+
