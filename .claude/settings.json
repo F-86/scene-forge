@@ -1,11 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(bash scripts/sync-main.sh)",
-      "Bash(bash scripts/create-combo.sh*)",
-      "Bash(bash scripts/promote-to-ui.sh*)",
+      "Bash(bash .claude/scripts/sync-main.sh)",
+      "Bash(bash .claude/scripts/create-combo.sh*)",
+      "Bash(bash .claude/scripts/promote-to-ui.sh*)",
       "Bash(git checkout*)",
       "Bash(git branch*)"
+    ],
+    "deny": [
+      "Bash(git commit*)"
     ]
   }
 }
