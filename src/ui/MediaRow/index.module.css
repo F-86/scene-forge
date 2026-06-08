@@ -1,0 +1,22 @@
+/* ── 外层横排容器 ── */
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--media-row-gap, 12px);
+}
+
+/* ── 垂直居中变体 ── */
+.alignCenter {
+  align-items: center;
+}
+
+/* ── 左侧固定元素：不拉伸，不收缩 ── */
+.leading {
+  flex-shrink: 0;
+}
+
+/* ── 右侧内容区：自适应宽度，防溢出 ── */
+.body {
+  flex: 1;
+  min-width: 0;
+}
