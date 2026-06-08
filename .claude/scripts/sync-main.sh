@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# scripts/sync-main.sh
+# .claude/scripts/sync-main.sh
 #
 # 将 main 分支的最新代码 rebase 到所有本地分支（scene/*、combo/*、exp/*）
 #
 # 用法：
-#   bash scripts/sync-main.sh
+#   bash .claude/scripts/sync-main.sh
 #
 # 执行后效果：
 #   - 每个非 main 分支依次执行 git rebase main

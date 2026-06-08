@@ -3,17 +3,15 @@ description: 将 main 分支的最新代码同步（rebase）到所有本地 sce
 allowed-tools: Bash
 ---
 
-用户希望把 main 上的最新改动同步到所有本地分支。
-
 ## 执行步骤
 
-1. 运行脚本：
+1. **运行脚本**：
    ```bash
-   bash scripts/sync-main.sh
+   bash .claude/scripts/sync-main.sh
    ```
 
-2. 脚本完成后，检查输出：
-   - 若全部成功，告知用户同步完成
+2. **脚本完成后**，检查输出：
+   - 若全部成功，告知用户同步完成，并列出已同步的分支
    - 若有分支失败（rebase 冲突），列出失败的分支，并提示用户逐个手动处理：
      ```bash
      git checkout <失败的分支>

@@ -3,7 +3,9 @@
     "allow": [
       "Bash(bash scripts/sync-main.sh)",
       "Bash(bash scripts/create-combo.sh*)",
-      "Bash(bash scripts/promote-to-ui.sh*)"
+      "Bash(bash scripts/promote-to-ui.sh*)",
+      "Bash(git checkout*)",
+      "Bash(git branch*)"
     ]
   }
 }

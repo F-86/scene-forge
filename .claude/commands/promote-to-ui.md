@@ -4,23 +4,24 @@ allowed-tools: Bash, Read, Edit
 argument-hint: <ComponentName>
 ---
 
-用户希望将当前 `scene/*` 分支上开发的通用 UI 组件提升（promote）到 main 分支的 `src/ui/`，并重新 rebase 回当前分支。
-
-组件名称：$ARGUMENTS
+组件名称：$ARGUMENTS（PascalCase）
 
 ## 执行步骤
 
 1. **确认组件目录存在**：检查 `src/ui/$ARGUMENTS/` 是否存在，不存在则报错提示
 
-2. **确认 `src/ui/index.ts` 已导出该组件**：如果缺少 `export { default as $ARGUMENTS }` 这一行，先用 Edit 工具补上，再继续
+2. **确认 `src/ui/index.ts` 已导出该组件**：若缺少对应的 `export` 行，先用 Edit 工具补上再继续：
+   ```ts
+   export { default as $ARGUMENTS } from './$ARGUMENTS'
+   ```
 
 3. **运行脚本**：
    ```bash
-   bash scripts/promote-to-ui.sh $ARGUMENTS
+   bash .claude/scripts/promote-to-ui.sh $ARGUMENTS
    ```
 
 4. **脚本完成后**，执行 `git status`，列出剩余的未提交文件，告诉用户：
-   - 哪些是场景专属文件（`src/scenes/`、`src/App.tsx`、`src/scenes/index.ts`、`docs/requirements/`）
+   - 哪些是场景专属文件（`src/scenes/`、`src/App.tsx`、`src/scenes/index.ts`）
    - 给出具体的 `git add` + `git commit` 命令建议，commit message 格式：`feat(<scene-name>): ...`
 
 ## 注意事项

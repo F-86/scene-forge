@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# scripts/promote-to-ui.sh
+# .claude/scripts/promote-to-ui.sh
 #
 # 将当前 scene 分支上开发的通用 UI 组件提升到 main 分支的 src/ui/
 #
 # 用法：
-#   bash scripts/promote-to-ui.sh <ComponentName>
+#   bash .claude/scripts/promote-to-ui.sh <ComponentName>
 #
 # 示例：
-#   bash scripts/promote-to-ui.sh SortIndicator
+#   bash .claude/scripts/promote-to-ui.sh SortIndicator
 #
 # 执行后效果：
 #   1. stash 当前所有改动（含未追踪文件）
@@ -34,10 +34,10 @@ step()  { echo -e "${CYAN}[step]${NC} $*"; }
 if [ $# -ne 1 ]; then
   error "参数不正确"
   echo ""
-  echo "用法：bash scripts/promote-to-ui.sh <ComponentName>"
+  echo "用法：bash .claude/scripts/promote-to-ui.sh <ComponentName>"
   echo ""
   echo "示例："
-  echo "  bash scripts/promote-to-ui.sh SortIndicator"
+  echo "  bash .claude/scripts/promote-to-ui.sh SortIndicator"
   exit 1
 fi
 

@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# scripts/create-combo.sh
+# .claude/scripts/create-combo.sh
 #
 # 从 main 切出新的 combo 分支，依次 merge 指定的 scene 分支
 # merge 冲突时只有 App.tsx 和 scenes/index.ts 需要手动合并（保留两侧内容），
 # 其余场景目录文件不会冲突。
 #
 # 用法：
-#   bash scripts/create-combo.sh <combo分支名> <scene分支1> <scene分支2> [...]
+#   bash .claude/scripts/create-combo.sh <combo分支名> <scene分支1> <scene分支2> [...]
 #
 # 示例：
-#   bash scripts/create-combo.sh combo/data-display scene/basic-list scene/data-table
+#   bash .claude/scripts/create-combo.sh combo/data-display scene/basic-list scene/data-table
 #
 # 执行后效果：
 #   - 从 main 切出指定名称的 combo 分支
@@ -34,10 +34,10 @@ step()    { echo -e "${CYAN}[step]${NC} $*"; }
 if [ $# -lt 2 ]; then
   error "参数不足"
   echo ""
-  echo "用法：bash scripts/create-combo.sh <combo分支名> <scene分支1> <scene分支2> [...]"
+  echo "用法：bash .claude/scripts/create-combo.sh <combo分支名> <scene分支1> <scene分支2> [...]"
   echo ""
   echo "示例："
-  echo "  bash scripts/create-combo.sh combo/data-display scene/basic-list scene/data-table"
+  echo "  bash .claude/scripts/create-combo.sh combo/data-display scene/basic-list scene/data-table"
   exit 1
 fi
 
