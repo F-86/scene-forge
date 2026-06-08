@@ -71,11 +71,21 @@ scenes/SceneName/mock.ts  # 上层：组合工厂函数，定义场景所需的�
 - `testing.md` — 验收 Checklist
 - `git-commit.md` — 提交信息格式
 
+## 分支策略
+
+| 分支 | 用途 |
+|------|------|
+| `main` | 框架、通用组件、规范文档；**不包含任何具体场景** |
+| `scene/<name>` | 单个 UI 场景；从 `main` 切出，永不合并回 main |
+| `exp/<name>` | 实验性功能探索；从 `main` 切出，根据结论决定是否合并 |
+
 ## Git 提交格式
 
 ```
 <类型>(<范围>): <中文描述>
 
-类型：feat | fix | mock | refactor | docs | chore
+类型：feat | fix | mock | refactor | docs | chore | exp
 范围：对应 src/scenes/ 下的目录名或模块名
 ```
+
+完整分支规范见 `docs/standards/git-commit.md`。
