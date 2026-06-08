@@ -1,8 +1,17 @@
+import { HashRouter, Route, Routes } from 'react-router-dom'
+import Layout from '@/components/Layout'
+import Home from '@/scenes/Home'
+
 const App = () => {
   return (
-    <div className="app">
-      <h1>Scene Forge</h1>
-    </div>
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          {/* 新增场景在此追加 Route */}
+        </Route>
+      </Routes>
+    </HashRouter>
   )
 }
 
