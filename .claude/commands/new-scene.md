@@ -8,7 +8,7 @@ argument-hint: <SceneName>
 
 严格按以下步骤执行，不得跳过或合并。
 
-## 第一步：需求与技术方案确认
+## Step 1：需求与技术方案确认
 
 根据场景描述判断是否存在**非显而易见的技术决策**，如有则向用户确认，例如：
 
@@ -16,23 +16,15 @@ argument-hint: <SceneName>
 - 拖拽排序：用 `@dnd-kit` 还是原生 Drag API？
 - 富文本：用哪个编辑器？
 
-**若场景简单明确（如普通列表、表单、卡片网格），跳过此步骤直接进入第二步。**
+**若场景简单明确（如普通列表、表单、卡片网格），跳过此步骤直接进入 Step 2。**
 
-## 第二步：确认当前在 main 分支
-
-```bash
-git branch --show-current
-```
-
-若不在 `main`，中止并提示用户先切回 main。
-
-## 第三步：创建场景分支
+## Step 2：创建场景分支
 
 ```bash
 git checkout -b scene/<kebab-name>
 ```
 
-## 第四步：识别通用 UI 原语
+## Step 3：识别通用 UI 原语
 
 在动手写代码前，分析场景所需 UI 结构，**提前**区分：
 
@@ -57,7 +49,7 @@ git checkout -b scene/<kebab-name>
 - 出现 `min-width: 0` 或 `flex-shrink: 0`（经典防溢出结构）
 - 同一个 div 嵌套结构在组件里出现 2 次以上
 
-## 第五步：写通用 UI 组件（如有）
+## Step 4：写通用 UI 组件（如有）
 
 **每个组件单独走一遍以下流程：**
 
@@ -73,7 +65,7 @@ git checkout -b scene/<kebab-name>
 
 参考现有组件风格：`src/ui/Tag/`、`src/ui/Avatar/`、`src/ui/EmptyState/`
 
-## 第六步：写场景文件
+## Step 5：写场景文件
 
 在 `src/scenes/<SceneName>/` 下创建三个文件：
 
@@ -112,7 +104,7 @@ const <SceneName> = () => {
 }
 ```
 
-## 第七步：注册场景
+## Step 6：注册场景
 
 **`src/scenes/index.ts`** — 在 `SCENE_LIST` 数组末尾追加：
 ```ts
@@ -130,7 +122,7 @@ import <SceneName> from '@/scenes/<SceneName>'
 <Route path="<kebab-name>" element={<SceneName />} />
 ```
 
-## 第八步：构建验证
+## Step 7：构建验证
 
 ```bash
 pnpm build
@@ -138,14 +130,20 @@ pnpm build
 
 有类型错误必须修复后再提交。
 
-## 第九步：提交场景代码
+## Step 8：提交场景代码
 
 ```bash
 git add src/scenes/<SceneName>/ src/App.tsx src/scenes/index.ts
 git commit -m "feat(<kebab-name>): 开发<场景中文名>场景"
 ```
 
-## 第十步：更新分支记录
+## Step 9：更新分支记录到 main
+
+先切换到 main，再修改文件、提交，最后 rebase 回场景分支：
+
+```bash
+git checkout main
+```
 
 在 `docs/branches.md` 的「场景分支」表格末尾追加一行：
 
@@ -157,11 +155,13 @@ git commit -m "feat(<kebab-name>): 开发<场景中文名>场景"
 - 体现「验证什么」或「实现什么交互」
 - 如有引入第三方库，注明库名（如「使用 react-virtuoso」、「使用 @dnd-kit」）
 
-追加完毕后在 scene 分支上提交：
+追加完毕后提交，再切回场景分支 rebase：
 
 ```bash
 git add docs/branches.md
 git commit -m "docs(branches): 新增 scene/<kebab-name> 分支记录"
+git checkout scene/<kebab-name>
+git rebase main
 ```
 
 ## 禁止事项
