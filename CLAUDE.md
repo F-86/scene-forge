@@ -85,7 +85,7 @@ scenes/SceneName/mock.ts  # 上层：组合工厂函数，定义场景所需的�
 
 开发场景时，若发现可提取到 `src/ui/` 的通用组件，**必须分两次提交**：
 
-1. 使用 `bash scripts/promote-to-ui.sh <ComponentName>` 将组件提交到 main 并 rebase 回当前分支
+1. 使用 `bash .claude/scripts/promote-to-ui.sh <ComponentName>` 将组件提交到 main 并 rebase 回当前分支
 2. 再提交场景专属代码（`src/scenes/`、`src/App.tsx`、`src/scenes/index.ts`）
 
 **`src/ui/` 的任何改动都只能提交到 main，禁止在 scene/* 分支上提交。**

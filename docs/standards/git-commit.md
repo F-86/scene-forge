@@ -42,7 +42,7 @@ git checkout -b scene/basic-list
 # ── 第一次提交：通用组件（如有） ────────────────────────────────────────────
 
 # 3. 使用脚本自动完成：切 main 提交组件 → 切回 → rebase
-bash scripts/promote-to-ui.sh <ComponentName>
+bash .claude/scripts/promote-to-ui.sh <ComponentName>
 # 脚本等价于：
 #   git checkout main
 #   git add src/ui/<ComponentName>/ src/ui/index.ts
@@ -112,17 +112,17 @@ git merge scene/kanban
 
 ### 脚本工具
 
-项目根目录 `scripts/` 下提供三个辅助脚本，在项目根目录下执行。
+项目根目录 `.claude/scripts/` 下提供三个辅助脚本，在项目根目录下执行。
 
 #### `promote-to-ui.sh` — 将通用组件从场景分支提升到 main
 
 在 `scene/*` 分支开发时，发现有可复用的 UI 原语，使用此脚本一键完成：切 main 提交组件 → 切回场景分支 → rebase。
 
 ```bash
-bash scripts/promote-to-ui.sh <ComponentName>
+bash .claude/scripts/promote-to-ui.sh <ComponentName>
 
 # 示例：将 SortIndicator 提升到 main
-bash scripts/promote-to-ui.sh SortIndicator
+bash .claude/scripts/promote-to-ui.sh SortIndicator
 ```
 
 也可使用 slash command（需先建好 `.claude/commands/`）：
@@ -142,7 +142,7 @@ bash scripts/promote-to-ui.sh SortIndicator
 当 main 上有新的通用组件或规范更新时，执行此脚本将变更 rebase 到所有 `scene/*`、`combo/*`、`exp/*` 分支。**建议每次修改 main 后立即执行。**
 
 ```bash
-bash scripts/sync-main.sh
+bash .claude/scripts/sync-main.sh
 ```
 
 注意事项：
@@ -156,10 +156,10 @@ bash scripts/sync-main.sh
 需要同时展示多个场景时使用。从 main 切出新分支后依次 merge 指定的 scene 分支。
 
 ```bash
-bash scripts/create-combo.sh <combo分支名> <scene分支1> <scene分支2> [...]
+bash .claude/scripts/create-combo.sh <combo分支名> <scene分支1> <scene分支2> [...]
 
 # 示例
-bash scripts/create-combo.sh combo/data-display scene/basic-list scene/data-table
+bash .claude/scripts/create-combo.sh combo/data-display scene/basic-list scene/data-table
 ```
 
 注意事项：
