@@ -1,4 +1,4 @@
-import { InboxIcon } from 'lucide-react'
+import { Avatar, Tag, EmptyState } from '@/ui'
 import { useMockVariant } from '@/hooks/useMockVariant'
 import { mockScenes } from './mock'
 import styles from './index.module.css'
@@ -28,11 +28,7 @@ const BasicList = () => {
 
       {/* 空状态 */}
       {items.length === 0 && (
-        <div className={styles.empty}>
-          <InboxIcon size={48} className={styles.emptyIcon} />
-          <p className={styles.emptyTitle}>暂无数据</p>
-          <p className={styles.emptyDesc}>当前列表为空，可以切换左侧的 Mock 变体查看其他效果</p>
-        </div>
+        <EmptyState description="当前列表为空，可以切换左侧的 Mock 变体查看其他效果" />
       )}
 
       {/* 列表 */}
@@ -40,27 +36,13 @@ const BasicList = () => {
         <ul className={styles.list}>
           {items.map(item => (
             <li key={item.id} className={styles.item}>
-              {/* 头像 */}
-              <div
-                className={styles.avatar}
-                style={{ background: item.avatarColor }}
-              >
-                {item.avatarLabel}
-              </div>
+              <Avatar color={item.avatarColor} label={item.avatarLabel} />
 
               {/* 内容 */}
               <div className={styles.body}>
                 <div className={styles.titleRow}>
                   <span className={styles.title}>{item.title}</span>
-                  <span
-                    className={styles.tag}
-                    style={{
-                      background: `${item.tagColor}18`,
-                      color: item.tagColor,
-                    }}
-                  >
-                    {item.tag}
-                  </span>
+                  <Tag label={item.tag} color={item.tagColor} />
                 </div>
 
                 {item.description && (
