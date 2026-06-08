@@ -1,6 +1,7 @@
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import Layout from '@/components/Layout'
 import Home from '@/scenes/Home'
+import CardGrid from '@/scenes/CardGrid'
 
 const App = () => {
   return (
@@ -8,6 +9,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="card-grid" element={<CardGrid />} />
           {/* 新增场景在此追加 Route */}
         </Route>
       </Routes>

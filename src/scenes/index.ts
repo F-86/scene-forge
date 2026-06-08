@@ -1,4 +1,4 @@
-import { LayoutDashboard } from 'lucide-react'
+import { LayoutDashboard, LayoutGrid } from 'lucide-react'
 import type { ComponentType } from 'react'
 
 /** 场景配置项类型 */
@@ -20,5 +20,10 @@ export const SCENE_LIST: SceneConfig[] = [
     path: '/',
     label: '首页',
     icon: LayoutDashboard,
+  },
+  {
+    path: '/card-grid',
+    label: '卡片网格',
+    icon: LayoutGrid,
   },
 ]
