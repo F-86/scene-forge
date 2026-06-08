@@ -1,0 +1,42 @@
+/* 表单字段容器样式 */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary, #111827);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.required {
+  color: #ef4444;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+}
+
+.errorMsg {
+  margin: 0;
+  font-size: 12px;
+  color: #ef4444;
+}
+
+/* 有错误时，control 内的 input/select/textarea 边框变红 */
+.fieldError :is(input, select, textarea) {
+  border-color: #ef4444 !important;
+}
+
+.fieldError :is(input, select, textarea):focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
