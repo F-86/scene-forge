@@ -41,6 +41,22 @@ git checkout -b scene/<kebab-name>
 | 纯 UI 容器/布局，不含业务字段，其他场景可复用 | `src/ui/` |
 | 与本场景数据结构强绑定，其他场景不会用 | `src/scenes/<SceneName>/` |
 
+**必须对照以下常见布局模式逐一检查**，命中即提取：
+
+| 模式 | 典型代码气味 | 参考命名 |
+|------|------------|---------|
+| 左固定 + 右自适应（Media Object） | `display:flex` + 左侧 `flex-shrink:0` + 右侧 `flex:1; min-width:0` | `MediaRow` |
+| 标题 + 副文本竖排 | 两行文字上下叠，一大一小一深一浅 | `TextStack` |
+| 标题行（左标题 + 右操作） | `justify-content:space-between` 的单行容器 | `RowHeader` |
+| 滚动容器 | `overflow:auto` 配合固定高度，内部撑开 | `ScrollArea` |
+| 操作按钮组 | 多个 `<button>` / icon-button 横排，带间距 | `ActionBar` |
+| 状态徽标 | 小圆点/小标签表示在线/离线/告警等状态 | `StatusBadge` |
+
+**写代码过程中如果出现以下气味，立即停下来判断是否该提取：**
+- 手写 `flex` 布局超过 4 行 CSS，且不含任何业务字段名
+- 出现 `min-width: 0` 或 `flex-shrink: 0`（经典防溢出结构）
+- 同一个 div 嵌套结构在组件里出现 2 次以上
+
 ## 第五步：写通用 UI 组件（如有）
 
 **每个组件单独走一遍以下流程：**
