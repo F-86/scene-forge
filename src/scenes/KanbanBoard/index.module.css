@@ -1,0 +1,113 @@
+/* ── 看板整体：横向排列各列，超宽时横向滚动 ── */
+.board {
+  display: flex;
+  gap: 16px;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 8px;
+}
+
+/* ── 单列容器 ── */
+.column {
+  display: flex;
+  flex-direction: column;
+  /* 列宽固定，不随内容收缩 */
+  width: 280px;
+  flex-shrink: 0;
+  background: #f9fafb;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+/* ── 列头 ── */
+.columnHeader {
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.columnTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.cardCount {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: #9ca3af;
+  border-radius: 10px;
+  padding: 1px 7px;
+  line-height: 1.6;
+}
+
+/* ── 列内容区（ScrollArea 撑满剩余高度） ── */
+.columnBody {
+  flex: 1;
+  min-height: 0;
+}
+
+/* ── 卡片列表 ── */
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 10px 16px;
+}
+
+/* ── 单张卡片内边距补充 ── */
+.kanbanCard {
+  cursor: grab;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kanbanCard:active {
+  cursor: grabbing;
+}
+
+/* ── 优先级标签 ── */
+.priority {
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* ── 卡片底部：标签 + 负责人 ── */
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.assignee {
+  font-size: 11px;
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+/* ── DragOverlay 跟随预览：轻微放大 + 阴影 ── */
+.overlay {
+  transform: scale(1.03);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  cursor: grabbing;
+}
