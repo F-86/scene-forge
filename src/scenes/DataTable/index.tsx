@@ -1,10 +1,10 @@
 import { useState, useMemo } from 'react'
-import { ArrowUpDown, ArrowUp, ArrowDown, Table2 } from 'lucide-react'
-import { Tag, EmptyState } from '@/ui'
+import { Table2 } from 'lucide-react'
+import { Tag, EmptyState, SortIndicator } from '@/ui'
 import { useMockVariant } from '@/hooks/useMockVariant'
 import { mockScenes } from './mock'
 import { STATUS_CONFIG } from './types'
-import type { SortKey, SortDirection, SortState, TableRow } from './types'
+import type { SortKey, SortState, TableRow } from './types'
 import styles from './index.module.css'
 
 // ── 常量 ─────────────────────────────────────────────────────────────────────
@@ -57,20 +57,7 @@ const nextSort = (current: SortState, clickedKey: SortKey): SortState => {
 
 // ── 子组件 ────────────────────────────────────────────────────────────────────
 
-interface SortIconProps {
-  sortKey: SortKey
-  currentSort: SortState
-}
-
-/** 列头排序图标 */
-const SortIcon = ({ sortKey, currentSort }: SortIconProps) => {
-  if (currentSort.key !== sortKey) {
-    return <ArrowUpDown size={14} className={styles.sortIconNeutral} />
-  }
-  return currentSort.direction === 'asc'
-    ? <ArrowUp   size={14} className={styles.sortIconActive} />
-    : <ArrowDown size={14} className={styles.sortIconActive} />
-}
+// SortIndicator 已提取至 @/ui，此处直接使用
 
 // ── 主组件 ────────────────────────────────────────────────────────────────────
 
@@ -110,7 +97,9 @@ const DataTable = () => {
                   <span className={styles.thInner}>
                     {col.label}
                     {col.sortKey && (
-                      <SortIcon sortKey={col.sortKey} currentSort={sort} />
+                      <SortIndicator
+                        direction={sort.key === col.sortKey ? sort.direction : null}
+                      />
                     )}
                   </span>
                 </th>
