@@ -9,3 +9,4 @@
 export { default as Avatar } from './Avatar'
 export { default as Tag } from './Tag'
 export { default as EmptyState } from './EmptyState'
+export { default as SortIndicator } from './SortIndicator'

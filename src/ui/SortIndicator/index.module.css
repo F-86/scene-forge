@@ -1,0 +1,11 @@
+/* 排序方向指示器样式 */
+
+.neutral {
+  opacity: 0.3;
+  flex-shrink: 0;
+}
+
+.active {
+  color: var(--color-primary, #6366f1);
+  flex-shrink: 0;
+}
